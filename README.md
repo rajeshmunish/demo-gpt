@@ -1,6 +1,4 @@
-# SQL Query Generator with GPT-4 and Streamlit
-
-This project showcases the capabilities of combining OpenAI's GPT-4 with Streamlit to generate SQL queries based on natural language input. Users can enter a message describing the data they want to query from an SQLite database, and the application will display the generated SQL query as well as the results from the database.
+# UBTI GPT
 
 ## Table of Contents
 
@@ -14,9 +12,7 @@ This project showcases the capabilities of combining OpenAI's GPT-4 with Streaml
 
 ## Features
 
-- **Natural Language to SQL**: Uses GPT-4 to transform user's natural language input into an SQL query.
-- **Streamlit Interface**: Provides a simple and intuitive interface for users to input their queries.
-- **SQLite Backend**: Uses SQLite as the database backend to store and query the financial data.
+
   
 ## Prerequisites
 
@@ -49,7 +45,7 @@ This project showcases the capabilities of combining OpenAI's GPT-4 with Streaml
 
 1. **Run the Streamlit App**:
     ```bash
-    streamlit run main_app.py
+    streamlit run demo_gpt.py
     ```
 
 2. Open the displayed URL in your browser, usually `http://localhost:8501`.
@@ -60,9 +56,9 @@ This project showcases the capabilities of combining OpenAI's GPT-4 with Streaml
 
 ## How It Works
 
-1. **SQLite Database**:
+1. **SQL SERVER Database**:
 
-   The app uses SQLite to create a table representing a company's finances. It holds fields like revenue, expenses, and profit.
+   The app uses MS SQL to connect the datasbase based on given config. 
 
 2. **Schema Retrieval**:
 
@@ -74,12 +70,8 @@ This project showcases the capabilities of combining OpenAI's GPT-4 with Streaml
 
 4. **Query Execution**:
 
-   The app then executes the generated SQL query on the SQLite database and retrieves the results.
+   The app then executes the generated SQL query on the sql server database and retrieves the results.
 
-## Contributing
 
-Feel free to fork this repository, create a feature branch, and submit a pull request if you have improvements or fixes you'd like to share.
 
-## License
 
-This project is open source, under the MIT license.
