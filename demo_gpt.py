@@ -145,7 +145,7 @@ if user_message:
     #print(formatted_system_message)
     # Use GPT-4 to generate the SQL query
     response = get_completion_from_messages(formatted_system_message, user_message)
-    st.write(response)
+    print(response)
     # try:
          # Display the generated SQL query
         #st.write("Generated SQL Query:")
@@ -176,10 +176,10 @@ if user_message:
             #Parse the json data
             json_response = json.loads(response)
             query = json_response['query']
-            #command = json_response['command']
-            error = json_response['error']
+            # command = json_response['oaicommand']
+            # error = json_response['oaierror']
             if query != "":
-                if query != "":
+                if query != "" and query != "N/A" :
                     # Run the SQL query and display the results
                     sql_results = query_database(query, conn)
                     st.write("GUI Results:")

@@ -1,16 +1,16 @@
 import pyodbc as odbc
 
 # DF Prod database details
-#SERVER = 'ubti-p-df-ssvr.database.windows.net'
-#DATABASE = 'DiligenceFabric'
-#USERNAME = 'sqladmin'
-#PASSWORD = 'welcome123#'
+SERVER = 'ubti-p-df-ssvr.database.windows.net'
+DATABASE = 'DiligenceFabric'
+USERNAME = 'sqladmin'
+PASSWORD = 'welcome123#'
 
 # DF Dev Test database details
-SERVER = 'ubti-d-ssvr-03.database.windows.net'
-DATABASE = 'DFDevTest'
-USERNAME = 'adminsql'
-PASSWORD = 'P@$$w0rd'
+# SERVER = 'ubti-d-ssvr-03.database.windows.net'
+# DATABASE = 'DFDevTest'
+# USERNAME = 'adminsql'
+# PASSWORD = 'P@$$w0rd'
 
 # FinIN Prod database details
 #SERVER = 'UBTI-S-DEVSQL16'

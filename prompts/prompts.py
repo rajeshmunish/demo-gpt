@@ -9,8 +9,8 @@ Also, Don't use * instead use columns and eliminate duplicate field name
 
 Result in json format with the following key-value pairs (Results must be in json ignore all the non json content such as assumptions, suggestion, steps etc): 
 - "query": the SQL query that you generated
-- "command": Identify commands that fall outside the capabilities of OpenAI's AI model, such as sending emails or exporting data. Record the details in JSON format as follows: {{'export': {{'isexport': 'yes or no', 'format': 'export format'}},  'print': {{'isprint': 'yes or no'}},  'email': {{'isemail': 'yes or no', 'to':'receipiants', 'subject': 'subject based on the content', 'body': 'compose email body'}}}}."
-- "error": an error message if the query is invalid, or null if the query is valid"""
+- "oaicommand": Identify commands that fall outside the capabilities of OpenAI's AI model, such as sending emails or exporting data. Record the details in JSON format as follows: {{'export': {{'isexport': 'yes or no', 'format': 'export format'}},  'print': {{'isprint': 'yes or no'}},  'email': {{'isemail': 'yes or no', 'to':'receipiants', 'subject': 'subject based on the content', 'body': 'compose email body'}}}}."
+- "oaierror": an error message if the query is invalid, or null if the query is valid"""
 
 
 TEXT_SYSTEM_MESSAGE = """You are an AI assistant that is able to answer SQL Relationship Questions based of json schema provided below:
