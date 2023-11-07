@@ -7,10 +7,10 @@ import pyodbc as odbc
 #PASSWORD = 'P@$$w0rd'
 
 # DF Dev Test database details
-#SERVER = 'ubti-d-ssvr-03.database.windows.net'
-#DATABASE = 'DFDevTest'
-#USERNAME = 'sqladmin'
-#PASSWORD = 'welcome123#'
+SERVER = 'ubti-d-ssvr-03.database.windows.net'
+DATABASE = 'DFDevTest'
+USERNAME = 'sqladmin'
+PASSWORD = 'welcome123#'
 
 # FinIN Prod database details
 #SERVER = 'UBTI-S-DEVSQL16'
