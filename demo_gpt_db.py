@@ -21,8 +21,8 @@ def create_connection():
     conn = None;
     # try:
     
-    # connectionString = f'DRIVER={{ODBC Driver 17 for SQL Server}};SERVER={SERVER};PORT=1433;DATABASE={DATABASE};UID={USERNAME};PWD={PASSWORD}'
-    # conn = odbc.connect(connectionString)
+    connectionString = f'DRIVER={{ODBC Driver 17 for SQL Server}};SERVER={SERVER};PORT=1433;DATABASE={DATABASE};UID={USERNAME};PWD={PASSWORD}'
+    conn = odbc.connect(connectionString)
     # conn = pyodbc.connect('Driver={FreeTDS};'
     #                     'Server={SERVER};'
     #                     'Port = 1433;'
@@ -30,13 +30,13 @@ def create_connection():
     #                     'UID={USERNAME};'
     #                     'PWD={PASSWORD}'
     #                     ;TDS_Version=8.0;)
-    conn = odbc.connect('DRIVER=FreeTDS;SERVER={SERVER};PORT=1433;DATABASE={DATABASE};UID={USERNAME};PWD={PASSWORD};CHARSET=UTF8;TDS_Version=7.4;')
+    #conn = odbc.connect('DRIVER=FreeTDS;SERVER={SERVER};PORT=1433;DATABASE={DATABASE};UID={USERNAME};PWD={PASSWORD};CHARSET=UTF8;TDS_Version=7.4;')
     #conn = pyodbc.connect(connectionString)
     #conn = pyodbc.connect(sql_connection_str) 
     # except Error as e:
     #     print(e)
 
-    # connectionString = f"""
+    #connectionString = f"""
     #     DRIVER={{{DRIVER_NAME}}};
     #     SERVER={SERVER};
     #     PORT=1433;
