@@ -4,13 +4,13 @@ import pyodbc as odbc
 #SERVER = 'ubti-p-df-ssvr.database.windows.net'
 #DATABASE = 'DiligenceFabric'
 #USERNAME = 'adminsql'
-#PASSWORD = 'P@$$w0rd'
+#PASSWORD = 'welcome123#'
 
 # DF Dev Test database details
 SERVER = 'ubti-d-ssvr-03.database.windows.net'
 DATABASE = 'DFDevTest'
-USERNAME = 'sqladmin'
-PASSWORD = 'welcome123#'
+USERNAME = 'adminsql'
+PASSWORD = 'P@$$w0rd'
 
 # FinIN Prod database details
 #SERVER = 'UBTI-S-DEVSQL16'
