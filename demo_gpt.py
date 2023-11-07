@@ -144,7 +144,6 @@ if user_message:
         user_message = "Please respond in json format only. "+user_message
     #print(formatted_system_message)
     # Use GPT-4 to generate the SQL query
-    st.write(formatted_system_message)
     response = get_completion_from_messages(formatted_system_message, user_message)
     print(response)
     # try:
@@ -177,7 +176,7 @@ if user_message:
             #Parse the json data
             json_response = json.loads(response)
             query = json_response['query']
-            command = json_response['command']
+            #command = json_response['command']
             error = json_response['error']
             if error != "":
                 if query != "":
