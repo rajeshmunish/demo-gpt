@@ -28,12 +28,7 @@ def get_completion_from_messages(system_message, user_message, model=deployment_
         {'role': 'user', 'content': f"{user_message}"}
     ]
     
-    response = openai.ChatCompletion.create(
-        engine=model,
-        messages=messages,
-        temperature=temperature, 
-        max_tokens=max_tokens, 
-    )
+    response = openai.ChatCompletion.create( engine=model, messages=messages, temperature=temperature,  max_tokens=max_tokens)
     
     return response.choices[0].message["content"]
 

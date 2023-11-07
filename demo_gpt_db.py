@@ -3,7 +3,7 @@ import pyodbc as odbc
 # DF Prod database details
 #SERVER = 'ubti-p-df-ssvr.database.windows.net'
 #DATABASE = 'DiligenceFabric'
-#USERNAME = 'adminsql'
+#USERNAME = 'sqladmin'
 #PASSWORD = 'welcome123#'
 
 # DF Dev Test database details
