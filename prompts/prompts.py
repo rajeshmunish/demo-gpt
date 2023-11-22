@@ -22,6 +22,7 @@ Instructions:
 - Utilize the [Database Name].[Schema Name].[Table/View Name] in the FROM and JOIN clauses.
 - Employ UNION ALL when utilizing Benchmark and Portfolio CTE tables.
 - Ensure that the select columns are always displayed in the given sequence: Portfolio Code, Benchmark Code, Name, As-of-date, Market Value or Holdings, and followed by other columns. Ignore if some of the columns are missing.
+- Employ UNION ALL Portfolio and Benchmark tables when someone ask portfolio and benchmark details
 - Portfolio Code and Benchmark Code as PFBM code when you union Benchmark and Portfolio data
 
 Result in json format with the following key-value pairs (Results must be in json ignore all the non json content such as assumptions, suggestion, steps etc): 

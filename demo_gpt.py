@@ -195,7 +195,12 @@ if raw_user_message:
             #Parse the json data
             if validateJSON(response) == True :
                 json_response = json.loads(response)
-                query = json_response['query']
+                oaierror = json_response['oaierror']
+                if oaierror:
+                    query = ""
+                    st.write(oaierror)
+                else:
+                    query = json_response['query']
             else:
                 query = ""
             # command = json_response['oaicommand']
@@ -215,17 +220,23 @@ if raw_user_message:
                     # Charting
                     #st.bar_chart(sql_results)
                     if len(column_names) >= 2 :
-                        col1, col2 = st.columns([3, 2])
-                        col1.subheader("Table")
-                        col1.dataframe(sql_results, hide_index=True)
-                        col2.subheader("Chart")
                         dColLst = sql_results.select_dtypes(include=[np.datetime64]).columns.tolist()  
                         nColLst = sql_results.select_dtypes(include=[np.float64]).columns.tolist() 
                         oColLst = sql_results.select_dtypes(include=['object']).columns.tolist()  
-                        if len(column_names) == 2 :
+                        if len(oColLst) == 0 and len(dColLst) > 0 and len(nColLst) > 0:
+                            col1, col2 = st.columns([3, 2])
+                            col1.subheader("Table")
+                            col1.dataframe(sql_results, hide_index=True)
+                            col2.subheader("Chart")
                             col2.line_chart (sql_results, x=dColLst[0], y=nColLst[0])
-                        else:
+                        elif len(column_names) > 2 and len(dColLst) > 0 and len(nColLst) > 0 and len(oColLst) > 0:
+                            col1, col2 = st.columns([3, 2])
+                            col1.subheader("Table")
+                            col1.dataframe(sql_results, hide_index=True)
+                            col2.subheader("Chart")
                             col2.line_chart (sql_results, x=dColLst[0], y=nColLst[0], color =oColLst[0])
+                        else:
+                             st.dataframe(sql_results, hide_index=True)
                     else:
                         st.dataframe(sql_results, hide_index=True)
                     #checking to send email
