@@ -1,10 +1,11 @@
 import pyodbc as odbc
-
+import os
+from dotenv import load_dotenv
 # DF Prod database details
-SERVER = 'ubti-p-df-ssvr.database.windows.net'
-DATABASE = 'DiligenceFabric'
-USERNAME = 'sqladmin'
-PASSWORD = 'welcome123#'
+#SERVER = 'ubti-p-df-ssvr.database.windows.net'
+# DATABASE = 'DiligenceFabric'
+# USERNAME = 'sqladmin'
+# PASSWORD = 'welcome123#'
 
 # DF Dev Test database details
 # SERVER = 'ubti-d-ssvr-03.database.windows.net'
@@ -13,12 +14,16 @@ PASSWORD = 'welcome123#'
 # PASSWORD = 'P@$$w0rd'
 
 # FinIN Prod database details
-#SERVER = 'UBTI-S-DEVSQL16'
-#DATABASE = 'FinMetaPro'
-#USERNAME = 'FsDevUser'
-#PASSWORD = 'P@$$w0rd'
-#DRIVER_NAME = 'SQL SERVER'
-DRIVER_NAME = 'FreeTDS'
+# SERVER = 'UBTI-S-DEVSQL16'
+# DATABASE = 'FinMetaPro'
+# USERNAME = 'FsDevUser'
+# PASSWORD = 'P@$$w0rd'
+# #DRIVER_NAME = 'SQL SERVER'
+# DRIVER_NAME = 'FreeTDS'
+
+load_dotenv()
+sql_connection_str = os.getenv('SQL_CONNECTION_STRING')
+
 def handle_sql_variant_as_string(value):
     return value.decode('utf-16le')
 
@@ -27,7 +32,8 @@ def create_connection():
     conn = None;
     # try:
     
-    connectionString = f'DRIVER={{ODBC Driver 17 for SQL Server}};SERVER={SERVER};PORT=1433;DATABASE={DATABASE};UID={USERNAME};PWD={PASSWORD}'
+    #connectionString = f'DRIVER={{ODBC Driver 17 for SQL Server}};SERVER={SERVER};PORT=1433;DATABASE={DATABASE};UID={USERNAME};PWD={PASSWORD}'
+    connectionString = sql_connection_str
     conn = odbc.connect(connectionString)
     # conn = pyodbc.connect('Driver={FreeTDS};'
     #                     'Server={SERVER};'

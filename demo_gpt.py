@@ -1,6 +1,6 @@
 
-#import os
-#from dotenv import load_dotenv
+import os
+from dotenv import load_dotenv
 import streamlit as st
 import pandas as pd
 import demo_gpt_db
@@ -20,20 +20,27 @@ import matplotlib.pyplot as plt
 from matplotlib.backends.backend_pdf import PdfPages
 import time
 
-#load_dotenv()
+load_dotenv()
 
-output_type = "GUI_PLUS_SQL"
-sql_include_relationship = "YES"
-system_message_text_only = "NO"
+# output_type = "TEXT_ONLY"
+# sql_include_relationship = "YES"
+# system_message_text_only = "YES"
 
-# output_type = os.getenv('PROMPT_RESPONSE_TYPE')
-# sql_include_relationship = os.getenv('SQL_INCLUDE_RELATIONSHIP')
-# #sql_connection_str = os.getenv('SQL_CONNECTION_STRING')
-# system_message_text_only = os.getenv('PROMPT_NON_SQL_SYSTEM')
+output_type = os.getenv('PROMPT_RESPONSE_TYPE')
+sql_include_relationship = os.getenv('SQL_INCLUDE_RELATIONSHIP')
+sql_connection_str = os.getenv('SQL_CONNECTION_STRING')
+system_message_text_only = os.getenv('PROMPT_NON_SQL_SYSTEM')
 
 def query_database(query, conn):
     """ Run SQL query and return results in a dataframe """
     return pd.read_sql_query(query, conn)
+
+def validateJSON(jsonData):
+    try:
+        json.loads(jsonData)
+    except ValueError as err:
+        return False
+    return True
 
 def _draw_as_table(df, pagesize, title):
     alternating_colors = [['white'] * len(df.columns), ['lightgray'] * len(df.columns)] * len(df)
@@ -111,7 +118,7 @@ def send_email(sql_results, body, subject, to):
     server.ehlo()
     server.starttls()
     server.ehlo()
-    server.login("munishshri@gmail.com", "rqof kbcl atdg dzqm")  
+    server.login("username", "")  
     server.sendmail(msg['From'], to , msg.as_string())
     server.quit()  
 
@@ -125,9 +132,10 @@ st.title("UBTI TechGPT Pro - Artificial Intelligence")
 st.write("The Power of UBTI's TechGPT Pro for seamless natural language to business solutions")
 
 # Input field for the user to type a message
-user_message = st.text_input("Pose your inquiry:")
+raw_user_message = st.text_input("Pose your inquiry:")
+customize_user_message = ""
 
-if user_message:
+if raw_user_message:
 
     custom_schema = [];
     for schema in schemas:
@@ -139,13 +147,18 @@ if user_message:
     print(system_message_text_only)
     if system_message_text_only == "YES":
         formatted_system_message = TEXT_SYSTEM_MESSAGE.format(schema=foramated_schema)
+        customize_user_message = raw_user_message
     else:  
         formatted_system_message = SQL_SYSTEM_MESSAGE.format(schema=foramated_schema)
-        user_message = "Please respond in json format only. "+user_message
+        customize_user_message = "Please respond in json format only. "+raw_user_message
     #print(formatted_system_message)
     # Use GPT-4 to generate the SQL query
-    response = get_completion_from_messages(formatted_system_message, user_message)
+    response = get_completion_from_messages(formatted_system_message, customize_user_message)
+    print("------------Start Response--------------------------")
     print(response)
+    print("------------End Response----------------------------")
+    st.write("Your inquiry:")
+    st.write(raw_user_message)
     # try:
          # Display the generated SQL query
         #st.write("Generated SQL Query:")
@@ -174,16 +187,39 @@ if user_message:
             st.dataframe(sql_results)
         case "GUI_PLUS_SQL":
             #Parse the json data
-            json_response = json.loads(response)
-            query = json_response['query']
+            if validateJSON(response) == True :
+                json_response = json.loads(response)
+                query = json_response['query']
+            else:
+                query = ""
             # command = json_response['oaicommand']
             # error = json_response['oaierror']
-            if query != "":
+            print (query)
+            if query:
                 if query != "" and query != "N/A" :
                     # Run the SQL query and display the results
                     sql_results = query_database(query, conn)
+                    column_names = sql_results.columns.tolist()  
+                    column_data_types = sql_results.dtypes  
+                    #print(column_data_types)
                     st.write("GUI Results:")
-                    st.dataframe(sql_results, hide_index=True)
+                    #st.dataframe(sql_results, hide_index=True)
+                    # Charting
+                    #st.bar_chart(sql_results)
+                    if len(column_names) >= 2 :
+                        col1, col2 = st.columns([3, 2])
+                        col1.subheader("Table")
+                        col1.dataframe(sql_results, hide_index=True)
+                        col2.subheader("Chart")
+                        dColLst = sql_results.select_dtypes(include=[np.datetime64]).columns.tolist()  
+                        nColLst = sql_results.select_dtypes(include=[np.float64]).columns.tolist() 
+                        oColLst = sql_results.select_dtypes(include=['object']).columns.tolist()  
+                        if len(column_names) == 2 :
+                            col2.line_chart (sql_results, x=dColLst[0], y=nColLst[0])
+                        else:
+                            col2.line_chart (sql_results, x=dColLst[0], y=nColLst[0], color =oColLst[0])
+                    else:
+                        st.dataframe(sql_results, hide_index=True)
                     #checking to send email
                     #if command["email"]["isemail"] == "yes":
                         #send_email(sql_results, command["email"]["body"], command["email"]["subject"], command["email"]["to"])
@@ -191,10 +227,10 @@ if user_message:
                     # Display the generated SQL query
                     st.write("Response:")
                     st.write(response)
-            # else:
-            #     # Display the generated SQL query
-            #     st.write("Response:")
-            #     st.write(error)
+            else:
+                # Display the generated SQL query
+                st.write("Response:")
+                st.write(response)
             
         case "GUI_CHART_PLUS_SQL":
             json_response = json.loads(response)
