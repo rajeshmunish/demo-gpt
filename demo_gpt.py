@@ -19,6 +19,7 @@ import numpy as np
 import matplotlib.pyplot as plt
 from matplotlib.backends.backend_pdf import PdfPages
 import time
+import re  
 
 load_dotenv()
 
@@ -35,6 +36,11 @@ def query_database(query, conn):
     """ Run SQL query and return results in a dataframe """
     return pd.read_sql_query(query, conn)
 
+# Define the function that would do the replacement  
+def replacer(match):  
+    return '[{}].[{}]'.format(match.group(1), match.group(2))  
+
+# Validate the json
 def validateJSON(jsonData):
     try:
         json.loads(jsonData)
@@ -194,7 +200,9 @@ if raw_user_message:
                 query = ""
             # command = json_response['oaicommand']
             # error = json_response['oaierror']
-            print (query)
+            
+            # Use the sub() function to find and replace all occurrences  
+            query = re.sub(r'\[([^]]*?)\.\s*([^[]*?)\]', replacer, query)  
             if query:
                 if query != "" and query != "N/A" :
                     # Run the SQL query and display the results

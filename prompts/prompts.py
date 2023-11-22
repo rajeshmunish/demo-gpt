@@ -16,7 +16,7 @@ Instructions:
 - Enclose column names within square brackets []
 - Enclose alias names within square brackets []
 - Don't Enclose schema names and table name within square brackets []
-- Add a prefix to the column names with the table name to avoid ambiguity in select statements, where conditions, group by clauses, and other instances
+- Add a prefix to the column names with the table name or alias name to avoid ambiguity in select statements, where conditions, group by clauses, and other instances
 - to get the Portfolio name, use portfolio's short name field
 - Use Portfolio code for where condition to filter the portfolio
 - Utilize the [Database Name].[Schema Name].[Table/View Name] in the FROM and JOIN clauses.
